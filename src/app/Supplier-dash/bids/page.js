@@ -1,9 +1,14 @@
+
+
+
 import React from "react";
 import Link from "next/link";
 
 
 
 export default async function tempdb() {
+
+
   const bidData = [
     { date: "2024 Jan 24", type: "Rathu kekulu", quantity: "150kg", price: "rs. 118.00" },
     { date: "2024 Jan 24", type: "Rathu kekulu", quantity: "150kg", price: "rs. 118.00" },

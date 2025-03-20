@@ -61,7 +61,7 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-4 text-sm text-black hover:text-red">
-          Already Haven't an account? <a href="/register" className="font-bold hover:underline text-black hover:text-red">Register</a>
+          Already Haven't an account? <a href="/regidter-cus" className="font-bold hover:underline text-black hover:text-red">Register</a>
         </p>
       </div>
     </div>
