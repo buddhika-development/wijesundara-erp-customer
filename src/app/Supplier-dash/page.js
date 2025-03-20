@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import Axios from "axios"; // Note: Axios is imported but not used; you’re using fetch instead
 import { useEffect, useState } from "react";
 
 export default function Dashboard1() {
@@ -35,8 +34,8 @@ export default function Dashboard1() {
       <div className="bg-white shadow-md rounded-lg p-4">
         <div className="flex justify-between items-center border-b pb-3 mb-4">
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
-          <div className="text-gray-600">
-            Buddhika Madusanka
+          <div className="text-gray-600"><Link href="/Supplier-dash/supplier-profile">
+            Buddhika Madusanka</Link>
             <span className="text-gray-400 text-sm">Supplier</span>
           </div>
         </div>
@@ -86,7 +85,7 @@ export default function Dashboard1() {
                   <td className="p-3 text-black">{formatDate(row.date)}</td>
                   <td className="p-3 text-black">{row.riceType}</td>
                   <td className="p-3 text-black">{row.quantity}kg</td>
-                  <td className="p-3 text-black">{row.biddingPrice}</td>
+                  <td className="p-3 text-black">Rs. {row.biddingPrice}</td>
                   </tr>)) : (<tr><td colSpan="4" className="p-3 text-gray-500 text-center">No bids available.</td></tr>)}
             </tbody>
           </table>

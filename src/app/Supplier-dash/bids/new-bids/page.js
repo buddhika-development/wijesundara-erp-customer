@@ -1,49 +1,53 @@
 "use client";
 
 import Link from "next/link";
-import { fromJSON } from "postcss";
 import React from "react";
+import { useEffect, useState } from "react";
 
 
 export default function NewBidsPage() {
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
 
-    // Get form data using FormData
     const formData = new FormData(e.target);
     const body = Object.fromEntries(formData.entries()); // Convert FormData to object
 
+    const requestBody = {
+        supplierId: "660abcd1234567890abcd123", // Replace with actual supplier ID (e.g., from authentication)
+        riceType: body.type,
+        quantity: Number(body.quantity),
+        biddingPrice: Number(body.price),
+    };
+
     try {
-      const response = await fetch("/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body), // Convert to JSON
-      });
+        const response = await fetch("http://localhost:8080/api/bids", { // Update API URL
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+        });
 
-      const data = await response.json();
-      if (response.ok) {
-        alert("Bid placed successfully!");
-        e.target.reset(); // Reset form after success
-      } else {
-        alert("Error: " + data.message);
-      }
+        const data = await response.json();
+        if (response.ok) {
+            alert("Bid placed successfully!");
+            e.target.reset();
+        } else {
+            alert("Error: " + data.message);
+        }
     } catch (error) {
-      console.error("Error submitting bid:", error);
-      alert("Something went wrong!");
+        console.error("Error submitting bid:", error);
+        alert("Something went wrong!");
     }
-  };
-
+};
+ 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="bg-white shadow-md rounded-lg p-4">
         <div className="flex justify-between items-center border-b pb-3 mb-4">
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
-          <div className="text-gray-600">
-            Buddhika Madusanka <span className="text-gray-400 text-sm">Supplier</span>
-          </div>
+          <div className="text-gray-600"><Link href="/Supplier-dash/supplier-profile">Buddhika Madusanka</Link>
+          <span className="text-gray-400 text-sm">Supplier</span></div>
         </div>
 
         {/* Navigation */}
@@ -111,23 +115,55 @@ export default function NewBidsPage() {
   );
 }
 
-// Component for Featured Bids Section
+
 function FeaturedBids() {
+
+  const [data, setBids] = useState([]);
+
+  useEffect(() => {
+    const fetch_data = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/bids');
+        const data = await response.json();
+        setBids(data);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+   
+    fetch_data();
+  }, []);
+
+  console.log(data);
+
+  // Function to format date as 2025.09.19
+  const formatDate = (date) => {
+    const d = new Date(date);
+    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+
+  };
+
   return (
-    <div className="w-1/2">
-      <div className="border bg-blue-500 p-3 font-bold text-white">Featured Bids</div>
-      <ul className="mt-2 border p-3">
-        <li className="border-b py-3">
-          <p className="text-sm text-gray-600">2024 Jan 24</p>
-          <p className="font-bold text-black">Rathu Kekulu (200kg)</p>
-          <p className="text-lg font-bold text-gray-700">rs.118.00</p>
-        </li>
-        <li className="border-b py-3">
-          <p className="text-sm text-gray-600">2024 Jan 24</p>
-          <p className="font-bold text-black">Rathu Kekulu (200kg)</p>
-          <p className="text-lg font-bold text-gray-700">rs.118.00</p>
-        </li>
-      </ul>
-    </div>
+    <div className="bg-white mt-6 p-4 shadow-md rounded-lg">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b bg-gray-700">
+                <th className="p-3 text-left">Date</th>
+                <th className="p-3 text-left">Type of Rice</th>
+                <th className="p-3 text-left">Quantity</th>
+                <th className="p-3 text-left">Bidding price</th>
+                </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(data) && data.length > 0 ? data.map((row, index) => (
+                <tr key={index} className="border-b">
+                  <td className="p-3 text-black">{formatDate(row.date)}</td>
+                  <td className="p-3 text-black">{row.riceType}</td>
+                  <td className="p-3 text-black">{row.quantity}kg</td>
+                  <td className="p-3 text-black">Rs. {row.biddingPrice}</td>
+                  </tr>)) : (<tr><td colSpan="4" className="p-3 text-gray-500 text-center">No bids available.</td></tr>)}
+            </tbody>
+          </table>
+        </div>
   );
 }

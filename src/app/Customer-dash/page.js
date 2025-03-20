@@ -28,10 +28,9 @@ import Link from "next/link";
                 <td className="text-sm text-gray-600 p-2">2024 Jan 24</td>
                 <td className="text-md font-semibold text-black p-2 ">Rathu Kekulu (200kg)</td>
                 <td className="text-md font-bold text-black p-2">rs.118.00</td>
-                <button className="bg-blue-500 w-30 h-12 item-center justify-center rounded-lg text-white active:bg-white  active:text-black"><Link href="">ADD</Link></button>
-            
               </div>
             ))}
+            <div><button className="bg-black w-40 h-12 item-center justify-center rounded-lg text-white active:bg-white  active:text-black"><Link href="/Customer-dash/Placeorder">Place an Order</Link></button></div>
             
           </div>
           

@@ -21,7 +21,7 @@ export default function StockDashboard() {
     <div className="bg-white shadow-md rounded-lg p-4">
     <div className="flex justify-between items-center border-b pb-3 mb-4">
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
-          <div className="text-gray-600">Buddhika Madusanka
+          <div className="text-gray-600"><Link href="/Supplier-dash/supplier-profile">Buddhika Madusanka</Link>
           <span className="text-gray-400 text-sm">Supplier</span></div>
         </div>
       
