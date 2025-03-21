@@ -9,6 +9,17 @@ export default function NewBidsPage() {
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
     const [total, setTotal] = useState(0);
+    // const [data, setData] = useState();
+
+    useEffect(() => {
+        const fetchData= async() =>{
+          const response = await fetch("http://localhost:8080/api/rice");
+          const data = await response.json();
+          setData(data);
+
+        }
+        fetchData();
+      }, []);
   
     const handleQuantityChange = (e) => {
       const newQuantity = Number(e.target.value);
@@ -39,7 +50,7 @@ export default function NewBidsPage() {
         const response = await fetch("http://localhost:8080/api/order", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(requestBody),
+          body: JSON.stringify(requestBody), 
         });
   
         const data = await response.json();
@@ -49,6 +60,7 @@ export default function NewBidsPage() {
           setQuantity(0);
           setPrice(0);
           setTotal(0);
+          window.location.reload();
         } else {
           alert("Error: " + data.message);
         }
@@ -63,11 +75,11 @@ export default function NewBidsPage() {
       <div className="bg-white shadow-md rounded-lg p-4">
         <div className="flex justify-between items-center border-b pb-3 mb-4">
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
-          <div className="text-gray-600"><Link href="/Supplier-dash/supplier-profile">Buddhika Madusanka</Link>
+          <div className="text-gray-600"><Link href="Customer-dash/customer-profile">Buddhika Madusanka</Link>
           <span className="text-gray-400 text-sm">Supplier</span></div>
         </div>
 
-        {/* Navigation */}
+        
         <nav className="flex space-x-4 mb-6 border-b pb-3">
           <Link href="/Customer-dash" className="text-gray-700 font-semibold hover:text-black">
             <button>Dashboard</button>
@@ -79,11 +91,11 @@ export default function NewBidsPage() {
         </nav>
 
         <div className="flex gap-8 p-6">
-          {/* Left: Place New Bid */}
+          
           <div className="w-1/2">
             <h2 className="text-2xl font-bold mb-4 text-black">Place New Bid</h2>
             
-            
+          
            
             <form onSubmit={handleSubmit} className="space-y-3">
           <input
@@ -132,7 +144,7 @@ export default function NewBidsPage() {
         </form>
           </div>
 
-          {/* Right: Featured Bids */}
+          {/* Right: Featured Bids  */}
           <FeaturedBids />
         </div>
       </div>
@@ -140,7 +152,7 @@ export default function NewBidsPage() {
   );
 }
 
-// Component for Featured Bids Section
+
 function FeaturedBids() {
 
     const [data, setBids] = useState([]);
@@ -159,7 +171,6 @@ function FeaturedBids() {
       fetch_data();
     }, []);
   
-    // Function to format date as 2025.09.19
     const formatDate = (date) => {
       const d = new Date(date);
       return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
@@ -167,6 +178,7 @@ function FeaturedBids() {
 
   return (
     <div className="bg-white mt-6 p-4 shadow-md rounded-lg">
+      <h2 className="text-xl font-bold mb-4 text-black">Order deatils</h2>
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b bg-gray-700">

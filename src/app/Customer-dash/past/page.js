@@ -1,13 +1,55 @@
+"use client"
 import React from "react";
 import Link from "next/link";
+import { useState,useEffect } from "react";
+import axios from "axios";
 
  export default function Dashboard (){
+
+    const [data, setBids] = useState([]);
+    
+  
+      useEffect(() => {
+        const fetch_data = async () => {
+          try {
+            const response = await fetch("http://localhost:8080/api/order");
+            const data = await response.json();
+            setBids(data);
+          } catch (error) {
+            console.error("Error fetching data: ", error);
+          }
+        };
+    
+        fetch_data();
+      }, []);
+    
+      const formatDate = (date) => {
+        const d = new Date(date);
+        return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+      };
+      
+      const deleteHandler = async (orderId) => {  
+        const confirmDelete = window.confirm("Are you sure you want to delete this order?");
+        if (!confirmDelete) return; 
+    
+        try {
+            await axios.delete(`http://localhost:8080/api/order/${orderId}`);
+              
+              setBids(data.filter((bid) => bid._id!== orderId)); // if the bids id are equal to the order, that order is deleted
+             
+
+        } catch (error) {
+            console.error("Error deleting order:", error);
+        }
+    };
+    
+    
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <div className="bg-white shadow-md rounded-lg p-4">
         <div className="flex justify-between items-center border-b pb-3 mb-4">
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
-          <div className="text-gray-600">Buddhika Madusanka
+          <div className="text-gray-600"><Link href="Customer-dash/customer-profile">Buddhika Madusanka</Link>
           <span className="text-gray-400 text-sm">  Customer</span></div>
         </div>
         
@@ -19,19 +61,33 @@ import Link from "next/link";
         <div className="bg-white shadow-md rounded-lg p-4">
             <h2 className="text-lg font-semibold mb-3 text-black">Past ordered</h2>
             
-            {Array(4).fill(0).map((_, index) => (
-                
-                <div key={index} className="border-b pb-2 mb-2 flex justify-between">
-                  
-                  <td className="text-sm text-gray-600 p-2">2024 Jan 24</td>
-                  <td className="text-md font-semibold text-black p-2 ">Rathu Kekulu (200kg)</td>
-                  <td className="text-md font-bold text-black p-2">rs.118.00</td>
-                  <td><button className="bg-red-500 w-30 h-12 item-center justify-center rounded-lg text-white active:bg-white active:text-black"><Link href="">Delete</Link></button></td>
-              
-                </div>
-              ))}
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b bg-gray-700">
+                <th className="p-3 text-left">Date</th>
+                <th className="p-3 text-left">Type of Rice</th>
+                <th className="p-3 text-left">Quantity</th>
+                <th className="p-3 text-left"> price</th>
+                <th className="p-3 text-left"> Total</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(data) && data.length > 0 ? data.map((row, index) => (
+                <tr key={index} className="border-b">
+                  <td className="p-3 text-black">{formatDate(row.date)}</td>
+                  <td className="p-3 text-black">{row.riceType}</td>
+                  <td className="p-3 text-black">{row.quantity}kg</td>
+                  <td className="p-3 text-black">Rs. {row.price}</td>
+                  <td className="p-3 text-black">Rs. {row.total}</td>
+                  <td><button onClick={() => deleteHandler(row._id)} className="bg-red-800 w-40 h-12 item-center justify-center rounded-lg text-white active:bg-white  active:text-black">Delete</button></td>
+
+                  </tr>)) : (<tr><td colSpan="4" className="p-3 text-gray-500 text-center">No bids available.</td></tr>)}
+            </tbody>
+          </table>
+        </div>
           </div>
         </div>
-        </div>
+       
   )
 }

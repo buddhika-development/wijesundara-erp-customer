@@ -1,37 +1,38 @@
-
+"use client"
 
 
 import React from "react";
 import Link from "next/link";
+import { useState,useEffect } from "react";
 
 
 
-export default async function tempdb() {
+export default function tempdb() {
 
+const [data, setBids] = useState([]);
 
-  const bidData = [
-    { date: "2024 Jan 24", type: "Rathu kekulu", quantity: "150kg", price: "rs. 118.00" },
-    { date: "2024 Jan 24", type: "Rathu kekulu", quantity: "150kg", price: "rs. 118.00" },
-    { date: "2024 Jan 24", type: "Rathu kekulu", quantity: "150kg", price: "rs. 118.00" },
-    { date: "2024 Jan 24", type: "Rathu kekulu", quantity: "150kg", price: "rs. 118.00" },
-  ];
-   function getBids() {
-    return bidData;
-  }
+  useEffect(() => {
+    const fetch_data = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/bids');
+        const data = await response.json();
+        setBids(data);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+    };
+   
+    fetch_data();
+  }, []);
+
+  console.log(data);
+
   
-   function addBid(newBid) {
-    const id = bids.length + 1; 
-    bids.push({ id, ...newBid }); 
-  } 
-  function totbids() {
-    let totalBids = 0;
-    
-    bidData.forEach(element => {
-      totalBids++; 
-    
-    return totalBids;
-  })
-}
+  const formatDate = (date) => {
+    const d = new Date(date);
+    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+  };
+ 
   
 
   return (
@@ -46,7 +47,7 @@ export default async function tempdb() {
         </div>
 
       
-      {/* Navigation */}
+      
       <nav className="flex space-x-4 mb-6 border-b pb-3">
           <button><Link href="/Supplier-dash" className="text-gray-700 font-semibold hover:text-black">Dashboard</Link></button>
           <button><Link href="/Supplier-dash/stocks" className="text-gray-700 font-semibold hover:text-black">Stocks</Link></button>
@@ -54,45 +55,43 @@ export default async function tempdb() {
         </nav>
       
 
-      {/* Stats Cards */}
+      
       <div className="grid grid-cols-3 gap-4 mt-6">
         <div className="bg-white p-4 rounded-lg shadow-md text-center">
           <h2 className="text-gray-600">Total bid count</h2>
-          <p className="text-2xl font-bold text-black">{totbids()} Bids</p>
+          <p className="text-2xl font-bold text-black">{} Bids</p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-md text-center">
           <h2 className="text-gray-600">Cancelled bid count</h2>
-          <p className="text-2xl font-bold text-black">16 bids</p>
+          <p className="text-2xl font-bold text-black">{} bids</p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-md text-center">
           <h2 className="text-gray-600">Accepted bid count</h2>
-          <p className="text-2xl font-bold text-black">38 bids</p>
+          <p className="text-2xl font-bold text-black">{} bids</p>
         </div>
       </div>
-
-      {/* Table */}
       <div className="bg-white mt-6 p-4 shadow-md rounded-lg">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="border-b bg-gray-700">
-              <th className="p-3 text-left">Date</th>
-              <th className="p-3 text-left">Type of Rice</th>
-              <th className="p-3 text-left">Stock Quantity</th>
-              <th className="p-3 text-left">Bidding Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bidData.map((bid, index) => (
-              <tr key={index} className="border-b">
-                <td className="p-3 text-black">{bid.date}</td>
-                <td className="p-3 text-black">{bid.type}</td>
-                <td className="p-3 text-black">{bid.quantity}</td>
-                <td className="p-3 text-black">{bid.price}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b bg-gray-700">
+                <th className="p-3 text-left">Date</th>
+                <th className="p-3 text-left">Type of Rice</th>
+                <th className="p-3 text-left">Quantity</th>
+                <th className="p-3 text-left">Bidding price</th>
+                </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(data) && data.length > 0 ? data.map((row, index) => (
+                <tr key={index} className="border-b">
+                  <td className="p-3 text-black">{formatDate(row.date)}</td>
+                  <td className="p-3 text-black">{row.riceType}</td>
+                  <td className="p-3 text-black">{row.quantity}kg</td>
+                  <td className="p-3 text-black">Rs. {row.biddingPrice}</td>
+                  </tr>)) : (<tr><td colSpan="4" className="p-3 text-gray-500 text-center">No bids available.</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      
 
 
       <div className="flex items-center">
