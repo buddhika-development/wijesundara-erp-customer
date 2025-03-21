@@ -7,20 +7,20 @@ import { useEffect, useState } from "react";
 
 export default function NewBidsPage() {
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
 
     const formData = new FormData(e.target);
-    const body = Object.fromEntries(formData.entries()); // Convert FormData to object
+    const body = Object.fromEntries(formData.entries()); 
 
     const requestBody = {
-        supplierId: "660abcd1234567890abcd123", // Replace with actual supplier ID (e.g., from authentication)
-        riceType: body.type,
-        quantity: Number(body.quantity),
-        biddingPrice: Number(body.price),
+      supplierId: "67ddbbb75e2375995751f4d2",
+      riceType: body.riceType,
+      quantity: Number(body.quantity),
+      biddingPrice: Number(body.price),
     };
 
     try {
-        const response = await fetch("http://localhost:8080/api/bids", { // Update API URL
+        const response = await fetch("http://localhost:8080/api/bids", { 
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -32,6 +32,7 @@ export default function NewBidsPage() {
         if (response.ok) {
             alert("Bid placed successfully!");
             e.target.reset();
+            window.location.reload();
         } else {
             alert("Error: " + data.message);
         }
@@ -50,7 +51,7 @@ export default function NewBidsPage() {
           <span className="text-gray-400 text-sm">Supplier</span></div>
         </div>
 
-        {/* Navigation */}
+        
         <nav className="flex space-x-4 mb-6 border-b pb-3">
           <Link href="/Supplier-dash" className="text-gray-700 font-semibold hover:text-black">
             <button>Dashboard</button>
@@ -66,15 +67,15 @@ export default function NewBidsPage() {
         </nav>
 
         <div className="flex gap-8 p-6">
-          {/* Left: Place New Bid */}
+          
           <div className="w-1/2">
             <h2 className="text-2xl font-bold mb-4 text-black">Place New Bid</h2>
             
-            {/* Bid Form */}
+            
             <form onSubmit={handleSubmit} className="space-y-3">
               <input
                 type="text"
-                name="type"
+                name="riceType"
                 placeholder="Type of rice"
                 className="w-full p-3 border bg-gray-500"
                 required
@@ -89,7 +90,7 @@ export default function NewBidsPage() {
                   required
                 />
                 <span className="w-1/4 flex items-center justify-center border bg-gray-400">
-                  Unit
+                  KG
                 </span>
               </div>
 
@@ -101,13 +102,13 @@ export default function NewBidsPage() {
                 required
               />
 
-              <button type="submit" className="w-full p-3 bg-black text-white font-bold">
+              <button type="submit" className="w-full p-3 bg-black text-white font-bold active:bg-white active:text-black">
                 Place Bid
               </button>
             </form>
           </div>
 
-          {/* Right: Featured Bids */}
+         
           <FeaturedBids />
         </div>
       </div>

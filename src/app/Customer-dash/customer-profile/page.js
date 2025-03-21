@@ -9,11 +9,8 @@ export default function SupplierProfile() {
         const fetchData = async () => {
             try {
                 const response = await fetch("http://localhost:8080/api/customer/67dd575ae25ac3b86ec25f46");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
                 const fetchedData = await response.json();
-                console.log("Fetched data:", fetchedData);
+            
                 setSupplier(fetchedData);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -25,7 +22,7 @@ export default function SupplierProfile() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Form submitted with data:", data);
+        
     };
 
     console.log("Current state data:", data);
@@ -44,9 +41,8 @@ export default function SupplierProfile() {
                                     type="text"
                                     name="customer_name"
                                     value={data.Cname || ""}
-                                    onChange={(e) => setSupplier({ ...data, Cname: e.target.value })}
                                     className="w-full p-2 border rounded text-gray-900 font-semibold"
-                                    required
+                                    readOnly
                                 />
                             </label>
 
@@ -56,9 +52,9 @@ export default function SupplierProfile() {
                                     type="email"
                                     name="customer_email"
                                     value={data.CEmail || ""}
-                                    onChange={(e) => setSupplier({ ...data, CEmail: e.target.value })}
+                                    readOnly
                                     className="w-full p-2 border rounded text-gray-900 font-semibold"
-                                    required
+                                    
                                 />
                             </label>
 
@@ -68,9 +64,9 @@ export default function SupplierProfile() {
                                     type="text"
                                     name="customer_contact"
                                     value={data.supplier_contact || ""}
-                                    onChange={(e) => setSupplier({ ...data, supplier_contact: e.target.value })}
+                                    readOnly
                                     className="w-full p-2 border rounded text-gray-900 font-semibold"
-                                    required
+                                    
                                 />
                             </label>
 
@@ -80,9 +76,9 @@ export default function SupplierProfile() {
                                     type="text"
                                     name="customer_address_line_one"
                                     value={data.customer_address_line_one || ""}
-                                    onChange={(e) => setSupplier({ ...data, customer_address_line_one: e.target.value })}
+                                    readOnly
                                     className="w-full p-2 border rounded text-gray-900 font-semibold"
-                                    required
+                                    
                                 />
                             </label>
 
@@ -92,7 +88,7 @@ export default function SupplierProfile() {
                                     type="text"
                                     name="customer_address_line_two"
                                     value={data.customer_address_line_two || ""}
-                                    onChange={(e) => setSupplier({ ...data, customer_address_line_two: e.target.value })}
+                                    readOnly
                                     className="w-full p-2 border rounded text-gray-900 font-semibold"
                                 />
                             </label>
@@ -103,16 +99,15 @@ export default function SupplierProfile() {
                                     type="text"
                                     name="customer_address_city"
                                     value={data.customer_address_city || ""}
-                                    onChange={(e) => setSupplier({ ...data, customer_address_city: e.target.value })}
+                                    
                                     className="w-full p-2 border rounded text-gray-900 font-semibold"
-                                    required
+                                    readOnly
                                 />
                             </label>
-
+                            
                             <button
                                 type="submit"
-                                className="w-full p-3 bg-black text-white font-bold rounded active:bg-white active:text-black"
-                            >
+                                className="w-1/2  p-3 bg-black text-white font-bold rounded active:bg-white active:text-black">
                                 Update Profile
                             </button>
                         </form>

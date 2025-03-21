@@ -9,7 +9,7 @@ export default function NewBidsPage() {
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
     const [total, setTotal] = useState(0);
-    // const [data, setData] = useState();
+
 
     useEffect(() => {
         const fetchData= async() =>{
@@ -54,13 +54,10 @@ export default function NewBidsPage() {
         });
   
         const data = await response.json();
+        window.location.reload();
         if (response.ok) {
           alert("Bid placed successfully!");
-          e.target.reset();
-          setQuantity(0);
-          setPrice(0);
-          setTotal(0);
-          window.location.reload();
+          
         } else {
           alert("Error: " + data.message);
         }
@@ -75,8 +72,10 @@ export default function NewBidsPage() {
       <div className="bg-white shadow-md rounded-lg p-4">
         <div className="flex justify-between items-center border-b pb-3 mb-4">
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
-          <div className="text-gray-600"><Link href="Customer-dash/customer-profile">Buddhika Madusanka</Link>
-          <span className="text-gray-400 text-sm">Supplier</span></div>
+          <div className="text-gray-600"><Link href="/Customer-dash/customer-profile">
+            Buddhika Madusanka</Link>
+            <span className="text-gray-400 text-sm">Supplier</span>
+          </div>
         </div>
 
         
@@ -144,7 +143,6 @@ export default function NewBidsPage() {
         </form>
           </div>
 
-          {/* Right: Featured Bids  */}
           <FeaturedBids />
         </div>
       </div>
