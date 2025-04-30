@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function SecurityPage() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -18,27 +19,27 @@ export default function SecurityPage() {
   
     try {
       
-      const response = await fetch("http://localhost:8080/api/customer/67dd575ae25ac3b86ec25f46");
+      const response = await fetch("http://localhost:8080/api/supplier/67ddbbb75e2375995751f4d2");
       if (!response.ok) {
         throw new Error("Failed to fetch customer data");
       }
       const customerData = await response.json();
   
       
-      if (customerData.CPassowrd !== currentPassword) {
+      if (customerData.supplierPassword !== currentPassword) {
         setMessage("Current password is incorrect.");
         return;
       }
   
       
-      const updateResponse = await fetch("http://localhost:8080/api/customer/67dd575ae25ac3b86ec25f46", {
+      const updateResponse = await fetch("http://localhost:8080/api/supplier/67ddbbb75e2375995751f4d2", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...customerData,
-          CPassowrd: newPassword, 
+          supplierPassword: newPassword, 
         }),
       });
   
@@ -62,31 +63,37 @@ export default function SecurityPage() {
 
   return (
     <div className="min-h-screen flex bg-gray-100 text-black">
-      {/* Sidebar */}
+      
       <div className="w-64 bg-white p-4 shadow-md">
         <h2 className="text-xl font-bold mb-6">Customer Panel</h2>
         <ul className="space-y-2">
-          <li>
-            <a href="/Customer-dash/page-info" className="block px-4 py-2 rounded hover:bg-gray-200">
-              Profile
-            </a>
-          </li>
-          <li>
-            <a href="/Customer-dash/page-info/sequrity" className="block px-4 py-2 rounded bg-blue-100 text-blue-600 font-semibold">
-              Security
-            </a>
-          </li>
-          <li>
-            <a href="/Customer-dash/page-info/about" className="block px-4 py-2 rounded hover:bg-gray-200">
-              About
-            </a>
-          </li>
+        <li>
+                <Link href="/Supplier-dash/spage-info">
+                <span className="block px-4 py-2 rounded hover:bg-blue-100  font-semibold cursor-pointer">
+                    Profile
+                </span>
+                </Link>
+            </li>
+            <li>
+                <Link href="/Supplier-dash/spage-info/Sup-sequrity">
+                <span className="block px-4 py-2 rounded hover:bg-gray-200 text-blue-600 font-semibold cursor-pointer">
+                    Security
+                </span>
+                </Link>
+            </li>
+            <li>
+                <Link href="/Supplier-dash/spage-info/Sup-about">
+                <span className="block px-4 py-2 rounded hover:bg-gray-200 font-semibold cursor-pointer">
+                    About
+                </span>
+                </Link>
+            </li>
         </ul>
       </div>
 
-      {/* Main Content */}
+     
       <div className="flex-1 p-6">
-        <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
+        <div className="w-full h-full mx-auto bg-white shadow-md rounded-lg p-6">
           <h1 className="text-2xl font-bold mb-6">Security Settings</h1>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
