@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 
 export default function NewBidsPage() {
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
 
+    e.preventDefault(); 
+    
     const formData = new FormData(e.target);
     const body = Object.fromEntries(formData.entries()); 
 
@@ -18,6 +19,14 @@ export default function NewBidsPage() {
       quantity: Number(body.quantity),
       biddingPrice: Number(body.price),
     };
+
+    const quantity = Number(formData.get("quantity"));
+    const price = Number(formData.get("price"));
+
+    if (quantity <= 0 || price <= 0) {
+      alert("Please enter valid values. Quantity and price must be greater than zero.");
+      return; 
+    }
 
     try {
         const response = await fetch("http://localhost:8080/api/bids", { 
@@ -73,13 +82,19 @@ export default function NewBidsPage() {
             
             
             <form onSubmit={handleSubmit} className="space-y-3">
-              <input
-                type="text"
+            <select
                 name="riceType"
-                placeholder="Type of rice"
                 className="w-full p-3 border bg-gray-500"
                 required
-              />
+              >
+                <option value="">Select type of rice</option>
+                <option value="Nadu">Nadu</option>
+                <option value="Samba">Samba</option>
+                <option value="Kekulu">Kekulu</option>
+                <option value="Red Rice">Red Rice</option>
+                <option value="Basmathi">Basmathi</option>
+              </select>
+
 
               <div className="flex">
                 <input
@@ -137,7 +152,7 @@ function FeaturedBids() {
 
   console.log(data);
 
-  // Function to format date as 2025.09.19
+
   const formatDate = (date) => {
     const d = new Date(date);
     return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
@@ -168,3 +183,4 @@ function FeaturedBids() {
         </div>
   );
 }
+

@@ -3,24 +3,47 @@
 import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
+import axios from "axios";
+
 
 
 export default function NewBidsPage() {
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
     const [total, setTotal] = useState(0);
+    const [riceType, setRiceType] = useState("");
+    const [ricePrices, setRicePrices] = useState([]);
+
+
 
 
     useEffect(() => {
         const fetchData= async() =>{
-          const response = await fetch("http://localhost:8080/api/rice");
+          const response = await fetch("http://localhost:8080/api/riceprice");
           const data = await response.json();
-          setData(data);
+          setRicePrices(data);
 
         }
         fetchData();
       }, []);
-  
+     
+      const handleRiceTypeChange = async (e) => {
+        const selectedType = e.target.value;
+        setRiceType(selectedType);
+      
+        if (selectedType) {
+          try {
+            const response = await axios.get(`http://localhost:8080/api/riceprice/${selectedType}`);
+            const fetchedPrice = response.data.price;
+            setPrice(fetchedPrice);
+            setTotal(fetchedPrice * quantity);
+          } catch (error) {
+            console.error("Error fetching rice price:", error);
+          }
+        }
+      };
+      
+        
     const handleQuantityChange = (e) => {
       const newQuantity = Number(e.target.value);
       setQuantity(newQuantity);
@@ -41,7 +64,7 @@ export default function NewBidsPage() {
   
       const requestBody = {
         customerId: "67db0e0bc231d18066917da8",
-        riceType: body.type,
+        riceType: body.riceType,
         quantity: quantity,
         price: price,
       };
@@ -97,13 +120,21 @@ export default function NewBidsPage() {
           
            
             <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            type="text"
-            name="type"
-            placeholder="Type of rice"
-            className="w-full p-3 border text-black "
-            required
-          />
+            <select
+              name="riceType"
+              value={riceType}
+              onChange={handleRiceTypeChange}
+              className="w-full p-3 border bg-gray-500"
+              required
+            >
+              <option value="">Select type of rice</option>
+              <option value="Keeri Samba">Keeri Samba</option>
+              <option value="lanka basumathi">lanka basumathi</option>
+              <option value="Sudu kakulu">Sudu kakulu</option>
+              <option value="Rathu kakulu">Rathu kakulu</option>
+              <option value="Basmati">Basmati</option>
+            </select>
+
 
           <div className="flex">
             <input

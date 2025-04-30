@@ -28,20 +28,20 @@ import axios from "axios";
         return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
       };
       
-      const deleteHandler = async (orderId) => {  
-        const confirmDelete = window.confirm("Are you sure you want to delete this order?");
-        if (!confirmDelete) return; 
+    //   const deleteHandler = async (orderId) => {  
+    //     const confirmDelete = window.confirm("Are you sure you want to delete this order?");
+    //     if (!confirmDelete) return; 
     
-        try {
-            await axios.delete(`http://localhost:8080/api/order/${orderId}`);
+    //     try {
+    //         await axios.delete(`http://localhost:8080/api/order/${orderId}`);
               
-              setBids(data.filter((bid) => bid._id!== orderId)); 
+    //           setBids(data.filter((bid) => bid._id!== orderId)); 
              
 
-        } catch (error) {
-            console.error("Error deleting order:", error);
-        }
-    };
+    //     } catch (error) {
+    //         console.error("Error deleting order:", error);
+    //     }
+    // };
     
     
   return (
@@ -82,7 +82,7 @@ import axios from "axios";
                   <td className="p-3 text-black">{row.quantity}kg</td>
                   <td className="p-3 text-black">Rs. {row.price}</td>
                   <td className="p-3 text-black">Rs. {row.total}</td>
-                  <td><button onClick={() => deleteHandler(row._id)} className="bg-red-800 w-40 h-12 item-center justify-center rounded-lg text-white active:bg-white  active:text-black">Delete</button></td>
+                  {/* <td><button onClick={() => deleteHandler(row._id)} className="bg-red-800 w-40 h-12 item-center justify-center rounded-lg text-white active:bg-white  active:text-black">Delete</button></td> */}
 
                   </tr>)) : (<tr><td colSpan="4" className="p-3 text-gray-500 text-center">No bids available.</td></tr>)}
             </tbody>

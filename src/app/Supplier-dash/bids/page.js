@@ -1,105 +1,101 @@
-"use client"
+"use client";
 
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useState,useEffect } from "react";
 
-
-
-export default function tempdb() {
-
-const [data, setBids] = useState([]);
+export default function TempDB() {
+  const [data, setBids] = useState([]);
+  const [totalBids, setTotalBids] = useState(0);
+  const [cancelledBids, setCancelledBids] = useState(0);
+  const [acceptedBids, setAcceptedBids] = useState(0);
 
   useEffect(() => {
-    const fetch_data = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/bids');
-        const data = await response.json();
-        setBids(data);
+        const response = await fetch("http://localhost:8080/api/bids");
+        const result = await response.json();
+        setBids(result);
+        setTotalBids(result.length);
+        setCancelledBids(result.filter((bid) => bid.status === "Cancelled").length);
+        setAcceptedBids(result.filter((bid) => bid.status === "Accepted").length);
       } catch (error) {
-        console.error('Error fetching data: ', error);
+        console.error("Error fetching data: ", error);
       }
     };
-   
-    fetch_data();
+    fetchData();
   }, []);
 
-  console.log(data);
-
-  
   const formatDate = (date) => {
     const d = new Date(date);
-    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
   };
- 
-  
 
   return (
-
-    
-    <div className="min-h-screen bg-gray-100 p-6">
-    <div className="bg-white shadow-md rounded-lg p-4">
-    <div className="flex justify-between items-center border-b pb-3 mb-4">
-          <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
-          <div className="text-gray-600"><Link href="/Supplier-dash/supplier-profile">Buddhika Madusanka</Link>
-          <span className="text-gray-400 text-sm">Supplier</span></div>
+    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-5xl">
+        <div className="flex justify-between items-center border-b pb-4 mb-6">
+          <h1 className="text-2xl font-bold text-gray-800">WIJESUNDARA RICE</h1>
+          <div className="text-gray-600 text-right">
+            <Link href="/Supplier-dash/supplier-profile" className="font-semibold hover:text-gray-800">Buddhika Madusanka</Link>
+            <p className="text-gray-400 text-sm">Supplier</p>
+          </div>
         </div>
 
-      
-      
-      <nav className="flex space-x-4 mb-6 border-b pb-3">
-          <button><Link href="/Supplier-dash" className="text-gray-700 font-semibold hover:text-black">Dashboard</Link></button>
-          <button><Link href="/Supplier-dash/stocks" className="text-gray-700 font-semibold hover:text-black">Stocks</Link></button>
-          <div className="bg-gray-300 w-40 h-12 flex items-center justify-center rounded-lg"><button className="w-full h-full"><Link href="/Supplier-dash/bids" className="text-black font-semibold">Bids</Link></button></div>
+        <nav className="flex space-x-6 mb-6 border-b pb-4">
+          <Link href="/Supplier-dash" className="px-4 py-2 text-gray-700 font-semibold hover:text-blue-600 transition">Dashboard</Link>
+          <Link href="/Supplier-dash/stocks" className="px-4 py-2 text-gray-700 font-semibold hover:text-blue-600 transition">Stocks</Link>
+          <Link href="/Supplier-dash/bids" className="px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold shadow-md hover:bg-blue-600 transition">Bids</Link>
         </nav>
-      
 
-      
-      <div className="grid grid-cols-3 gap-4 mt-6">
-        <div className="bg-white p-4 rounded-lg shadow-md text-center">
-          <h2 className="text-gray-600">Total bid count</h2>
-          <p className="text-2xl font-bold text-black">{} Bids</p>
+        <div className="grid grid-cols-3 gap-6 mb-6">
+          <div className="bg-blue-100 p-6 rounded-lg text-center shadow-sm">
+            <h2 className="text-gray-700">Total Bid Count</h2>
+            <p className="text-2xl font-bold text-blue-800">{totalBids} Bids</p>
+          </div>
+          <div className="bg-red-100 p-6 rounded-lg text-center shadow-sm">
+            <h2 className="text-gray-700">Cancelled Bids</h2>
+            <p className="text-2xl font-bold text-red-800">{cancelledBids} Bids</p>
+          </div>
+          <div className="bg-green-100 p-6 rounded-lg text-center shadow-sm">
+            <h2 className="text-gray-700">Accepted Bids</h2>
+            <p className="text-2xl font-bold text-green-800">{acceptedBids} Bids</p>
+          </div>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow-md text-center">
-          <h2 className="text-gray-600">Cancelled bid count</h2>
-          <p className="text-2xl font-bold text-black">{} bids</p>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow-md text-center">
-          <h2 className="text-gray-600">Accepted bid count</h2>
-          <p className="text-2xl font-bold text-black">{} bids</p>
-        </div>
-      </div>
-      <div className="bg-white mt-6 p-4 shadow-md rounded-lg">
+
+        <div className="bg-white mt-6 p-6 shadow-md rounded-lg">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="border-b bg-gray-700">
+              <tr className="border-b bg-blue-500 text-white">
                 <th className="p-3 text-left">Date</th>
                 <th className="p-3 text-left">Type of Rice</th>
                 <th className="p-3 text-left">Quantity</th>
-                <th className="p-3 text-left">Bidding price</th>
-                </tr>
+                <th className="p-3 text-left">Bidding Price</th>
+              </tr>
             </thead>
             <tbody>
-              {Array.isArray(data) && data.length > 0 ? data.map((row, index) => (
-                <tr key={index} className="border-b">
-                  <td className="p-3 text-black">{formatDate(row.date)}</td>
-                  <td className="p-3 text-black">{row.riceType}</td>
-                  <td className="p-3 text-black">{row.quantity}kg</td>
-                  <td className="p-3 text-black">Rs. {row.biddingPrice}</td>
-                  </tr>)) : (<tr><td colSpan="4" className="p-3 text-gray-500 text-center">No bids available.</td></tr>)}
+              {Array.isArray(data) && data.length > 0 ? (
+                data.map((row, index) => (
+                  <tr key={index} className="border-b hover:bg-gray-100 transition">
+                    <td className="p-3 text-gray-700">{formatDate(row.date)}</td>
+                    <td className="p-3 text-gray-700">{row.riceType}</td>
+                    <td className="p-3 text-gray-700">{row.quantity}kg</td>
+                    <td className="p-3 text-gray-700">Rs. {row.biddingPrice}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="p-3 text-gray-500 text-center">No bids available.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
-      
 
-
-      <div className="flex items-center">
-          {/* Button */}
-            <div className="mt-6 flex justify-end">
-            <button className="px-6 py-2 bg-gray-900 text-white rounded-lg"><Link href="/Supplier-dash/bids/new-bids">Place New Bid</Link></button>
-            </div>
-            </div>
+        <div className="flex justify-end mt-6">
+          <Link href="/Supplier-dash/bids/new-bids" className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition">
+            Place New Bid
+          </Link>
+        </div>
       </div>
     </div>
   );
