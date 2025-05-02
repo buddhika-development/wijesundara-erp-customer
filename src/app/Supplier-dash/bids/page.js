@@ -53,8 +53,8 @@ export default function TempDB() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-5xl">
+    <div className="bg-gray-50 w-full min-h-screen p-6 flex flex-col items-center">
+      <div className="bg-white shadow-lg rounded-2xl p-6 w-full h-full">
         <div className="flex justify-between items-center border-b pb-4 mb-6">
           <h1 className="text-2xl font-bold text-gray-800">WIJESUNDARA RICE</h1>
           <div className="text-gray-600 text-right">
