@@ -6,7 +6,7 @@ export default function AboutPage() {
     <div className="min-h-screen flex bg-gray-100 text-black">
       {/* Sidebar */}
       <div className="w-64 bg-white p-4 shadow-md">
-        <h2 className="text-xl font-bold mb-6">Customer Panel</h2>
+        <h2 className="text-xl font-bold mb-6">Supplier Panel</h2>
         <ul className="space-y-2">
         <li>
                 <Link href="/Supplier-dash/spage-info">

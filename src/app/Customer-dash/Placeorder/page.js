@@ -5,27 +5,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
-
 export default function NewBidsPage() {
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
     const [total, setTotal] = useState(0);
     const [riceType, setRiceType] = useState("");
-    const [ricePrices, setRicePrices] = useState([]);
-
-
-
-
-    useEffect(() => {
-        const fetchData= async() =>{
-          const response = await fetch("http://localhost:8080/api/riceprice");
-          const data = await response.json();
-          setRicePrices(data);
-
-        }
-        fetchData();
-      }, []);
      
       const handleRiceTypeChange = async (e) => {
         const selectedType = e.target.value;
@@ -95,7 +79,7 @@ export default function NewBidsPage() {
       <div className="bg-white shadow-md rounded-lg p-4">
         <div className="flex justify-between items-center border-b pb-3 mb-4">
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
-          <div className="text-gray-600"><Link href="/Customer-dash/customer-profile">
+          <div className="text-gray-600"><Link href="/Customer-dash/page-info">
             Buddhika Madusanka</Link>
             <span className="text-gray-400 text-sm">Supplier</span>
           </div>

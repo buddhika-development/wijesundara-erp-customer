@@ -5,19 +5,24 @@ import Link from "next/link";
 
 export default function TempDB() {
   const [data, setBids] = useState([]);
-  const [totalBids, setTotalBids] = useState(0);
   const [cancelledBids, setCancelledBids] = useState(0);
   const [acceptedBids, setAcceptedBids] = useState(0);
+  const [pendingBids, setPendingBids] = useState(0);
+
+  const [filteredBids, setFilteredBids] = useState([]);
+  const [filterType, setFilterType] = useState("all");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/bids");
+        const response = await fetch("http://localhost:8080/api/bids/67ddbbb75e2375995751f4d2");
         const result = await response.json();
         setBids(result);
-        setTotalBids(result.length);
+        setFilteredBids(result);
+
         setCancelledBids(result.filter((bid) => bid.status === "Cancelled").length);
         setAcceptedBids(result.filter((bid) => bid.status === "Accepted").length);
+        setPendingBids(result.filter((bid) => bid.status === "null").length);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -29,6 +34,23 @@ export default function TempDB() {
     const d = new Date(date);
     return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
   };
+  const totalBids = data.length;
+  const acceptedCount = data.filter(bid => bid.status === 'accept').length;
+  const canceledCount = data.filter(bid => bid.status === 'cancel').length;
+  const pendingCount = data.filter(bid => bid.status === null).length;
+
+  const handleFilterChange = (type) => {
+    setFilterType(type);
+    if (type === "accept") {
+      setFilteredBids(data.filter(bid => bid.status === "accept"));
+    } else if (type === "cancel") {
+      setFilteredBids(data.filter(bid => bid.status === "cancel"));
+    } else if(type === null){
+      setFilteredBids(data.filter(bid => bid.status === null));
+    } else {
+      setFilteredBids(data);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
@@ -36,7 +58,7 @@ export default function TempDB() {
         <div className="flex justify-between items-center border-b pb-4 mb-6">
           <h1 className="text-2xl font-bold text-gray-800">WIJESUNDARA RICE</h1>
           <div className="text-gray-600 text-right">
-            <Link href="/Supplier-dash/supplier-profile" className="font-semibold hover:text-gray-800">Buddhika Madusanka</Link>
+            <Link href="/Supplier-dash/spage-info" className="font-semibold hover:text-gray-800">Buddhika Madusanka</Link>
             <p className="text-gray-400 text-sm">Supplier</p>
           </div>
         </div>
@@ -54,12 +76,19 @@ export default function TempDB() {
           </div>
           <div className="bg-red-100 p-6 rounded-lg text-center shadow-sm">
             <h2 className="text-gray-700">Cancelled Bids</h2>
-            <p className="text-2xl font-bold text-red-800">{cancelledBids} Bids</p>
+            <p className="text-2xl font-bold text-red-800">{canceledCount} Bids</p>
           </div>
           <div className="bg-green-100 p-6 rounded-lg text-center shadow-sm">
             <h2 className="text-gray-700">Accepted Bids</h2>
-            <p className="text-2xl font-bold text-green-800">{acceptedBids} Bids</p>
+            <p className="text-2xl font-bold text-green-800">{acceptedCount} Bids</p>
           </div>
+        </div>
+
+        <div className="flex gap-4 mb-6">
+          <button onClick={() => handleFilterChange("all")} className={`px-4 py-2 rounded ${filterType === "all" ? "bg-black text-white" : "bg-gray-200 text-black"}`}>All</button>
+          <button onClick={() => handleFilterChange("accept")} className={`px-4 py-2 rounded ${filterType === "accept" ? "bg-green-600 text-white" : "bg-gray-200 text-black"}`}>Accepted</button>
+          <button onClick={() => handleFilterChange("cancel")} className={`px-4 py-2 rounded ${filterType === "cancel" ? "bg-red-600 text-white" : "bg-gray-200 text-black"}`}>Cancelled</button>
+          <button onClick={() => handleFilterChange(null)} className={`px-4 py-2 rounded ${filterType === null ? "bg-yellow-600 text-white" : "bg-gray-200 text-black"}`}>Pending</button>
         </div>
 
         <div className="bg-white mt-6 p-6 shadow-md rounded-lg">
@@ -73,18 +102,19 @@ export default function TempDB() {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(data) && data.length > 0 ? (
-                data.map((row, index) => (
+              {filteredBids.length > 0 ? (
+                filteredBids.map((row, index) => (
                   <tr key={index} className="border-b hover:bg-gray-100 transition">
                     <td className="p-3 text-gray-700">{formatDate(row.date)}</td>
                     <td className="p-3 text-gray-700">{row.riceType}</td>
                     <td className="p-3 text-gray-700">{row.quantity}kg</td>
                     <td className="p-3 text-gray-700">Rs. {row.biddingPrice}</td>
+                    
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="p-3 text-gray-500 text-center">No bids available.</td>
+                  <td colSpan="5" className="p-3 text-gray-500 text-center">No bids available.</td>
                 </tr>
               )}
             </tbody>
