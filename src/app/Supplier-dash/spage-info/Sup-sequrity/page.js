@@ -67,7 +67,14 @@ export default function SecurityPage() {
       <div className="w-64 bg-white p-4 shadow-md">
         <h2 className="text-xl font-bold mb-6">Supplier Panel</h2>
         <ul className="space-y-2">
-        <li>
+            <li>
+                <Link href="/Supplier-dash">
+                <span className="block px-4 py-2 rounded hover:bg-blue-100 font-semibold cursor-pointer">
+                    Dashboard
+                </span>
+                </Link>
+            </li>
+            <li>
                 <Link href="/Supplier-dash/spage-info">
                 <span className="block px-4 py-2 rounded hover:bg-blue-100  font-semibold cursor-pointer">
                     Profile
@@ -81,13 +88,13 @@ export default function SecurityPage() {
                 </span>
                 </Link>
             </li>
-            <li>
+            {/* <li>
                 <Link href="/Supplier-dash/spage-info/Sup-about">
                 <span className="block px-4 py-2 rounded hover:bg-gray-200 font-semibold cursor-pointer">
-                    About
+                Contact Us
                 </span>
                 </Link>
-            </li>
+            </li> */}
         </ul>
       </div>
 

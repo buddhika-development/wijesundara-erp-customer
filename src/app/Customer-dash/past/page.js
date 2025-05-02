@@ -27,23 +27,6 @@ import axios from "axios";
         const d = new Date(date);
         return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
       };
-      
-    //   const deleteHandler = async (orderId) => {  
-    //     const confirmDelete = window.confirm("Are you sure you want to delete this order?");
-    //     if (!confirmDelete) return; 
-    
-    //     try {
-    //         await axios.delete(`http://localhost:8080/api/order/${orderId}`);
-              
-    //           setBids(data.filter((bid) => bid._id!== orderId)); 
-             
-
-    //     } catch (error) {
-    //         console.error("Error deleting order:", error);
-    //     }
-    // };
-    
-    
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <div className="bg-white shadow-md rounded-lg p-4">
@@ -51,7 +34,7 @@ import axios from "axios";
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
           <div className="text-gray-600"><Link href="/Customer-dash/page-info">
             Buddhika Madusanka</Link>
-            <span className="text-gray-400 text-sm">Supplier</span>
+            <span className="text-gray-400 text-sm">Customer</span>
           </div>
           </div>
         

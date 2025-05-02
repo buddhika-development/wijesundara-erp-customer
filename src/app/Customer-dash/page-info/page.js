@@ -30,6 +30,11 @@ export default function SupplierProfile() {
         <h2 className="text-xl font-bold mb-6">Customer Panel</h2>
         <ul className="space-y-2">
           <li>
+            <a href="/Customer-dash" className="block px-4 py-2 rounded ">
+              Dashboard
+            </a>
+          </li>
+          <li>
             <a href="/Customer-dash/page-info" className="block px-4 py-2 rounded bg-blue-100 text-blue-600 font-semibold">
               Profile
             </a>
@@ -39,17 +44,17 @@ export default function SupplierProfile() {
               Sequrity
             </a>
           </li>
-          <li>
+          {/* <li>
             <a href="/Customer-dash/page-info/about" className="block px-4 py-2 rounded hover:bg-gray-200">
-              About
+            Contact Us
             </a>
-          </li>
+          </li> */}
         </ul>
       </div>
 
       
       <div className="flex-1 p-6">
-        <div className="max-w-3xl w-full p-6 bg-white shadow-md rounded-lg mx-auto">
+        <div className="h-full w-full p-6 bg-white shadow-md rounded-lg mx-auto">
           <h1 className="text-2xl font-bold mb-4">Customer Profile</h1>
 
           {data && data.Cname ? (
@@ -113,13 +118,6 @@ export default function SupplierProfile() {
                   readOnly
                 />
               </label>
-
-              <button
-                type="submit"
-                className="w-1/2 p-3 bg-black text-white font-bold rounded active:bg-white active:text-black"
-              >
-                Update Profile
-              </button>
             </form>
           ) : (
             <p className="p-3 text-gray-500 text-center">No data available.</p>

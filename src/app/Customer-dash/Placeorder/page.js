@@ -81,7 +81,7 @@ export default function NewBidsPage() {
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
           <div className="text-gray-600"><Link href="/Customer-dash/page-info">
             Buddhika Madusanka</Link>
-            <span className="text-gray-400 text-sm">Supplier</span>
+            <span className="text-gray-400 text-sm">Customer</span>
           </div>
         </div>
 
@@ -100,9 +100,7 @@ export default function NewBidsPage() {
           
           <div className="w-1/2">
             <h2 className="text-2xl font-bold mb-4 text-black">Place New Bid</h2>
-            
-          
-           
+
             <form onSubmit={handleSubmit} className="space-y-3">
             <select
               name="riceType"
@@ -117,9 +115,9 @@ export default function NewBidsPage() {
               <option value="Sudu kakulu">Sudu kakulu</option>
               <option value="Rathu kakulu">Rathu kakulu</option>
               <option value="Basmati">Basmati</option>
+              <option value="Kuruluthuda">Kuruluthuda</option>
+              <option value="Sudu nadu">Sudu nadu</option>
             </select>
-
-
           <div className="flex">
             <input
               type="number"
@@ -129,6 +127,7 @@ export default function NewBidsPage() {
               placeholder="Quantity"
               className="w-1/2 p-3 border text-black "
               required
+              min="1"
             />
             <span className="w-1/4 flex items-center justify-center border bg-gray-400 text-black ">
               KG
@@ -164,8 +163,6 @@ export default function NewBidsPage() {
     </div>
   );
 }
-
-
 function FeaturedBids() {
 
     const [data, setBids] = useState([]);

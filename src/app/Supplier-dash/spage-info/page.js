@@ -51,6 +51,13 @@ export default function SupplierProfile() {
         <h2 className="text-xl font-bold mb-6">Supplier Panel</h2>
         <ul className="space-y-2">
             <li>
+                <Link href="/Supplier-dash">
+                <span className="block px-4 py-2 rounded hover:bg-blue-100 font-semibold cursor-pointer">
+                    Dashboard
+                </span>
+                </Link>
+            </li>
+            <li>
                 <Link href="/Supplier-dash/spage-info">
                 <span className="block px-4 py-2 rounded hover:bg-blue-100 text-blue-600 font-semibold cursor-pointer">
                     Profile
@@ -64,13 +71,13 @@ export default function SupplierProfile() {
                 </span>
                 </Link>
             </li>
-            <li>
+            {/* <li>
                 <Link href="/Supplier-dash/spage-info/Sup-about">
                 <span className="block px-4 py-2 rounded hover:bg-gray-200 font-semibold cursor-pointer">
-                    About
+                Contact Us
                 </span>
                 </Link>
-            </li>
+            </li> */}
         </ul>
 
       </div>
@@ -88,13 +95,6 @@ export default function SupplierProfile() {
               <InputField label="Address Line 2" value={data.supplier_address_line_two} />
               <InputField label="City" value={data.supplier_address_city} />
             </div>
-
-            <button
-              type="button"
-              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200"
-            >
-              Update Profile
-            </button>
           </form>
         ) : (
           <p className="text-center text-gray-600">Supplier details not found.</p>

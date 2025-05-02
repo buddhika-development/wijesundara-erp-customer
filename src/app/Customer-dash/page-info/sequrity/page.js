@@ -66,6 +66,11 @@ export default function SecurityPage() {
       <div className="w-64 bg-white p-4 shadow-md">
         <h2 className="text-xl font-bold mb-6">Customer Panel</h2>
         <ul className="space-y-2">
+        <li>
+            <a href="/Customer-dash" className="block px-4 py-2 rounded ">
+              Dashboard
+            </a>
+          </li>
           <li>
             <a href="/Customer-dash/page-info" className="block px-4 py-2 rounded hover:bg-gray-200">
               Profile
@@ -76,17 +81,16 @@ export default function SecurityPage() {
               Security
             </a>
           </li>
-          <li>
+          {/* <li>
             <a href="/Customer-dash/page-info/about" className="block px-4 py-2 rounded hover:bg-gray-200">
-              About
+            Contact Us
             </a>
-          </li>
+          </li> */}
         </ul>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 p-6">
-        <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
+        <div className="w-full h-full mx-auto bg-white shadow-md rounded-lg p-6">
           <h1 className="text-2xl font-bold mb-6">Security Settings</h1>
 
           <form className="space-y-4" onSubmit={handleSubmit}>

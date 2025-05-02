@@ -35,7 +35,7 @@ import { useState,useEffect } from "react";
           <h1 className="text-xl font-bold text-black">WIJESUNDARA RICE</h1>
           <div className="text-gray-600"><Link href="/Customer-dash/page-info">
             Buddhika Madusanka</Link>
-            <span className="text-gray-400 text-sm">Supplier</span>
+            <span className="text-gray-400 text-sm">Customer</span>
           </div>
           </div>
         
