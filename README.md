@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Wijesundara Rice Mill ERP System
 
-## Getting Started
+Welcome to the **Wijesundara Rice Mill ERP System**.
 
-First, run the development server:
+This system is purpose-built to manage, streamline, and optimize the internal operations of Wijesundara Rice Mill. Developed based on the organization's specific business requirements, this full-featured web application enables efficient workflow automation, centralized data management, and improved cross-departmental visibility.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Brief System Introduction
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+![image](https://github.com/user-attachments/assets/32659b2b-6016-4fd8-b338-10be5c69610e)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The platform is architected around three core components to ensure scalability, security, and modular maintainability:
 
-## Learn More
+- **Customer and Supplier Portal**: Manages interactions with external suppliers and customers, allowing suppliers to place bids and submit stock availability directly.
+- **Internal System Client**: Manages all internal operational interfaces used by staff and administrators.
+- **Backend Server**: Handles all backend processing, data management, and API services.
 
-To learn more about Next.js, take a look at the following resources:
+By separating frontend and backend components, the system enhances security, optimizes performance, and allows each module to evolve independently.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🔗 **Internal System Client:** [Wijesundara ERP Internal System Client](https://github.com/buddhika-development/wijesundara-erp-internal-system-client)
+- 🔗 **Internal System Server:** [Wijesundara ERP Internal System Server](https://github.com/buddhika-development/wijesundara-erp-internal-system-server)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+### Purpose
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This separate portal is designed to facilitate external interactions between **Wijesundara Rice Mill** and its customers and suppliers. The dedicated web application manages all customer and supplier communications, order processing, and bidding activities, providing a seamless interface for external parties to engage with the company.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The key functionalities provided by this portal include:
+
+- **Customer Ordering:**  
+  Customers can place orders directly through the portal, selecting from available products and submitting purchase requests to the company.
+
+- **Supplier Bidding System:**  
+  Suppliers are able to submit bids for selling stock to the company. Based on these bids, the procurement team can evaluate supplier offers and process purchasing decisions efficiently.
+
+This component ensures smooth collaboration between external stakeholders and internal operations, simplifying both order placement and supplier negotiations.
